@@ -27,6 +27,24 @@
         <filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <!-- setup API servlet -->
+    <servlet>
+    	<servlet-name>jaxRsApiServlet</servlet-name>
+    	<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+    	<init-param>
+    		<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+    		<param-value>true</param-value>
+    	</init-param>
+    	<init-param>
+    		<param-name>com.sun.jersey.config.property.packages</param-name>
+    		<param-value>com.integratingfactor.idp.common.service.exceptions</param-value>
+    	</init-param>
+    </servlet>
+    <servlet-mapping>
+    	<servlet-name>jaxRsApiServlet</servlet-name>
+    	<url-pattern>/v1/*</url-pattern>
+    </servlet-mapping>
     
     	<!-- Processes application requests -->
 	<servlet>

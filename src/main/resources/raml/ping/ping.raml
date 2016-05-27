@@ -1,0 +1,52 @@
+#%RAML 0.8
+title: Account Service Health Check
+version: 1
+protocols: [ HTTPS ]
+baseUri: https://if-idp-services.appspot.com/accounts
+mediaType: application/json
+schemas:
+    - Pong: !include Pong.json
+
+/public/ping:
+    displayName: Public Ping
+    description: |
+        Public API for service health check. Does not requires any authentication.
+    get:
+        description: |
+            Get service health check response.
+        responses:
+            200:
+                description: service responding
+                body:
+                    application/json:
+                        example: !include publicPong200Example.json
+                        schema: Pong
+
+/ping:
+    displayName: Protected Ping
+    description: |
+        Protected API for service health check. Requires authorization header.
+    get:
+        description: |
+            Get service health check response with RBAC checks.
+        headers:
+            Authorization:
+                description: Authorization header with OAuth2 bearer token from iF IDP service
+                example: Bearer 0cb3887a-7f68-490a-bf15-c89aff96a6fb
+        responses:
+            200:
+                description: service responding
+                body:
+                    application/json:
+                        example: !include protectedPong200Example.json
+                        schema: Pong
+            401:
+                description: Bearer token authentication failed
+                body:
+                    application/json:
+                        example: !include ../common/401Example.json
+            403:
+                description: token does not have required role to access this resource
+                body:
+                    application/json:
+                        example: !include ../common/403Example.json

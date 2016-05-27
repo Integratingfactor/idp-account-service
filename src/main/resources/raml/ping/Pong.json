@@ -1,0 +1,10 @@
+{
+    "title": "Service Health Check Response Schema",
+    "type": "object",
+    "properties": {
+        "message": {
+            "type": "string",
+            "description" : "health check response message from service"
+        }
+    }
+}
